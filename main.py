@@ -1,11 +1,25 @@
-
-
 # ------- DEFINITION -------
-class Personne:
+
+class EtreVivant:
+    ESPECE_ETRE_VIVANT = "(être vivant non identifié)"
+
+    def AffichezInfosEtreVivant(self):
+        print(f"Info être vivant: {self.ESPECE_ETRE_VIVANT}")
+
+
+class Chat(EtreVivant):
+    ESPECE_ETRE_VIVANT = "Chat(Mammifère - Félin)"
+
+
+class Personne(EtreVivant):
+    # var de classe une pour toutes les Personne
+    ESPECE_ETRE_VIVANT = "Humain(Mammifère - Homo)"
+
     def __init__(self, nom="", age=0):
         # création d'une variable d'instance : nom
         self.nom = nom
         self.age = age
+
         if nom == "":
             self.demanderNom()
         print(f"Constructeur personne {self.nom}")
@@ -33,42 +47,35 @@ class Personne:
         self.nom = input("Quel est votre nom ? ")
 
 
+class Etudiant(Personne):
+    def __init__(self, nom, age, etudes):
+        # création d'une variable d'instance : nom
+        super().__init__(nom, age)
+        self.etudes = etudes
+
+    def sePresenter(self):
+        super().sePresenter()
+        print(f"Je suis etudiant en {self.etudes}")
+
+
 # ------- UTILISATION -------
-personne1 = Personne("Jean", 30)  # Je crée une personne
-personne2 = Personne("Paul", 15)  # Je crée une personne
-personne3 = Personne()
-personne4 = Personne(age=17)
+liste_personnes = [Personne("Jean", 30),
+                   Personne("Paul", 15),
+                   Personne("Zoe", 20)]
 
+# Personne.ESPECE_ETRE_VIVANT = "Mutant"
 
-# Personne.sePresenter(personne1)
-personne1.sePresenter()
-personne2.sePresenter()
-personne3.sePresenter()
-personne4.sePresenter()
+for personne in liste_personnes:
+    personne.sePresenter()
+    personne.AffichezInfosEtreVivant()
+    print()
 
-# print(f"Est majeur: {personne1.estMajeur()}")
-# print(f"Est majeur: {personne2.estMajeur()}")
+chat = Chat()
+chat.AffichezInfosEtreVivant()
 
-"""def afficher_informations_personne(nom, age):
-    print(f"La personne s'appelle {nom}, son âge est {age}ans ")
+etre_vivant = EtreVivant()
+etre_vivant.AffichezInfosEtreVivant()
 
-
-def demander_nom_personne():
-    nom = input("Quel est votre nom ? ")
-    return nom
-    # age = input("Quel est votre âge ? ")
-    # afficher_informations_personne(nom, age)
-
-
-nom1 = "Jean"
-age1 = 30
-nom2 = "Paul"
-age2 = 25
-
-afficher_informations_personne(nom1, age1)
-afficher_informations_personne(nom2, age2)
- 
-
-nom3 = demander_nom_personne()
-age3 = 18
-afficher_informations_personne(nom3, age3)"""
+etudiant = Etudiant("Marc", 22, "Ecole d'ingénieur informatique")
+etudiant.sePresenter()
+etudiant.AffichezInfosEtreVivant()
